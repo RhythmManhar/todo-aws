@@ -519,37 +519,27 @@ function showToast(message, type = 'info') {
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
   toast.innerHTML = `
-    <div class="toast-icon">
-      ${type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️'}
-    </div>
     <div class="toast-content">
-      <div class="toast-title">${type === 'success' ? 'Success' : type === 'error' ? 'Error' : type === 'warning' ? 'Warning' : 'Info'}</div>
+      <div class="toast-icon">${type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️'}</div>
       <div class="toast-message">${message}</div>
     </div>
-    <button class="close-toast" onclick="this.parentElement.remove()">&times;</div>
-    <div class="toast-progress"></div>
+    <button class="close-toast" aria-label="Close">&times;</button>
   `;
 
   toastContainer.appendChild(toast);
 
-  // Auto remove after 5 seconds
+  // Close button functionality
+  const closeBtn = toast.querySelector('.close-toast');
+  closeBtn.addEventListener('click', () => {
+    toast.remove();
+  });
+
+  // Auto remove after 4 seconds
   setTimeout(() => {
     if (toast.parentElement) {
       toast.remove();
     }
-  }, 5000);
-
-  // Add progress bar animation
-  const progressBar = toast.querySelector('.toast-progress');
-  let width = 100;
-  const interval = setInterval(() => {
-    if (width <= 0 || !toast.parentElement) {
-      clearInterval(interval);
-      return;
-    }
-    width -= 2;
-    progressBar.style.width = `${width}%`;
-  }, 50);
+  }, 4000);
 }
 
 // Utility Functions

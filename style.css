@@ -452,15 +452,16 @@ input:checked + .theme-slider:before {
 
 .stat-label {
   font-size: 0.875rem;
-  color: var(--gray-500);
+  color: var(--gray-700);
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: var(--spacing-xs);
 }
 
 .stat-value {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
   color: var(--gray-900);
   display: block;
   line-height: 1.2;
@@ -800,7 +801,7 @@ input:checked + .theme-slider:before {
 }
 
 .modal-content {
-  padding: var(--spacing-xl);
+  padding: var(--spacing-lg);
 }
 
 .modal-header {
@@ -849,10 +850,10 @@ input:checked + .theme-slider:before {
 }
 
 .form-group label {
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: var(--spacing-xs);
-  font-size: 0.9rem;
-  color: var(--gray-700);
+  font-size: 0.95rem;
+  color: var(--gray-900);
 }
 
 .form-group input,
@@ -865,6 +866,12 @@ input:checked + .theme-slider:before {
   background-color: var(--gray-50);
   color: var(--gray-900);
   transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--gray-400);
+  opacity: 0.7;
 }
 
 .form-group input:focus,
