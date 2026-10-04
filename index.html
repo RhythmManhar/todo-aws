@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TodoPro — Productivity Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <span class="brand-mark">✓</span>
+        <span>TodoPro</span>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-view="all">📋 <span>All Tasks</span></button>
+        <button class="nav-item" data-view="pending">⭕ <span>Pending</span></button>
+        <button class="nav-item" data-view="completed">✅ <span>Completed</span></button>
+        <button class="nav-item" data-view="important">⭐ <span>Important</span></button>
+        <button class="nav-item" data-view="today">📅 <span>Today</span></button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="add-task-btn" id="openAddBtn">＋ Add Task</button>
+        <label class="theme-row">
+          <span>Dark Mode</span>
+          <input type="checkbox" id="themeToggle">
+          <span class="switch"></span>
+        </label>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+        <div>
+          <h1>TodoPro Dashboard</h1>
+          <p class="subtitle">Stay organized. Get things done.</p>
+        </div>
+      </header>
+
+      <section class="toolbar">
+        <div class="search-wrap">
+          <span>🔎</span>
+          <input id="searchInput" type="search" placeholder="Search tasks..." autocomplete="off">
+        </div>
+        <div class="toolbar-actions">
+          <select id="sortSelect" aria-label="Sort tasks">
+            <option value="newest">Newest</option>
+            <option value="due">Due date</option>
+            <option value="priority">Priority</option>
+            <option value="title">Title</option>
+          </select>
+          <button class="secondary-btn" id="clearCompletedBtn">Clear Completed</button>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div><span>Total Tasks</span><strong id="totalCount">0</strong></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon">🟢</div>
+          <div><span>Completed</span><strong id="completedCount">0</strong></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon">⏳</div>
+          <div><span>Pending</span><strong id="pendingCount">0</strong></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon">⭐</div>
+          <div><span>Important</span><strong id="importantCount">0</strong></div>
+        </article>
+      </section>
+
+      <section class="content-head">
+        <div>
+          <h2 id="viewTitle">All Tasks</h2>
+          <p id="taskSummary">0 tasks</p>
+        </div>
+        <div class="progress-box">
+          <span id="completionRate">0% complete</span>
+          <div class="progress"><div id="progressBar"></div></div>
+        </div>
+      </section>
+
+      <section id="taskList" class="task-list" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <div class="overlay hidden" id="modalOverlay">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="closeModalBtn" aria-label="Close">×</button>
+      <h2 id="modalTitle">Add Task</h2>
+
+      <form id="taskForm">
+        <input type="hidden" id="taskId">
+
+        <label>Task Title <span>*</span>
+          <input id="taskTitle" required maxlength="120" placeholder="e.g. Complete DSA practice">
+        </label>
+
+        <label>Description
+          <textarea id="taskDescription" rows="3" maxlength="500" placeholder="Add some details..."></textarea>
+        </label>
+
+        <div class="form-row">
+          <label>Due Date
+            <input id="taskDueDate" type="date">
+          </label>
+          <label>Priority
+            <select id="taskPriority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+        </div>
+
+        <label>Category
+          <input id="taskCategory" maxlength="40" placeholder="Study, Personal, Shopping...">
+        </label>
+
+        <label class="check-label">
+          <input id="taskImportant" type="checkbox">
+          <span>Mark as Important</span>
+        </label>
+
+        <div class="form-actions">
+          <button type="button" class="secondary-btn" id="cancelModalBtn">Cancel</button>
+          <button type="submit" class="primary-btn" id="submitTaskBtn">Add Task</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <div id="toastContainer" class="toast-container"></div>
+  <script src="script.js"></script>
+</body>
+</html>
