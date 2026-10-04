@@ -3,25 +3,277 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My To-Do List</title>
+  <title>TodoPro - Modern Todo Application</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="todo-app">
-    <h1>My To-Do List</h1>
-    
-    <div class="input-container">
-      <input type="text" id="task-input" placeholder="Enter a new task..." autocomplete="off">
-      <button id="add-btn">Add Task</button>
-    </div>
+  <div class="todo-pro-app">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">✓</div>
+          <div class="logo-text">TodoPro</div>
+        </div>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle">
+          <span class="hamburger-icon">☰</span>
+        </button>
+      </div>
 
-    <ul id="task-list"></ul>
+      <nav class="sidebar-nav">
+        <ul class="nav-list">
+          <li class="nav-item active" data-view="all">
+            <span class="nav-icon">📋</span>
+            <span class="nav-text">All Tasks</span>
+          </li>
+          <li class="nav-item" data-view="pending">
+            <span class="nav-icon">⭕</span>
+            <span class="nav-text">Pending</span>
+          </li>
+          <li class="nav-item" data-view="completed">
+            <span class="nav-icon">✅</span>
+            <span class="nav-text">Completed</span>
+          </li>
+          <li class="nav-item" data-view="important">
+            <span class="nav-icon">⭐</span>
+            <span class="nav-text">Important</span>
+          </li>
+          <li class="nav-item" data-view="today">
+            <span class="nav-icon">📅</span>
+            <span class="nav-text">Today</span>
+          </li>
+        </ul>
+      </nav>
 
-    <div class="footer-info">
-      <span id="task-count">0 tasks left</span>
-      <button id="clear-all-btn" class="clear-btn">Clear All</button>
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-add-task" id="open-add-task-modal">
+          <span class="btn-icon">+</span> Add Task
+        </button>
+
+        <div class="theme-toggle">
+          <span class="theme-toggle-label">Dark Mode</span>
+          <label class="theme-switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="theme-slider"></span>
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="app-header">
+        <h1 class="app-title">TodoPro Dashboard</h1>
+        <div class="header-actions">
+          <div class="search-container">
+            <input type="text" id="search-input" placeholder="Search tasks...">
+            <button class="btn btn-search" id="search-btn">
+              <span class="search-icon">🔍</span>
+            </button>
+          </div>
+
+          <div class="filter-container">
+            <select id="filter-select">
+              <option value="all">All Tasks</option>
+              <option value="pending">Pending</option>
+              <option value="completed">Completed</option>
+              <option value="important">Important</option>
+            </select>
+          </div>
+
+          <div class="sort-container">
+            <select id="sort-select">
+              <option value="created-desc">Newest First</option>
+              <option value="created-asc">Oldest First</option>
+              <option value="due-date">Due Date</option>
+              <option value="priority-high">High Priority First</option>
+              <option value="priority-low">Low Priority First</option>
+            </select>
+          </div>
+        </div>
+      </header>
+
+      <!-- Statistics Dashboard -->
+      <section class="stats-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-content">
+              <div class="stat-label">Total Tasks</div>
+              <div class="stat-value" id="total-tasks">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-content">
+              <div class="stat-label">Completed</div>
+              <div class="stat-value" id="completed-tasks">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⭕</div>
+            <div class="stat-content">
+              <div class="stat-label">Pending</div>
+              <div class="stat-value" id="pending-tasks">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-content">
+              <div class="stat-label">Important</div>
+              <div class="stat-value" id="important-tasks">0</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📈</div>
+            <div class="stat-content">
+              <div class="stat-label">Completion Rate</div>
+              <div class="stat-value" id="completion-rate">0%</div>
+              <div class="stat-progress">
+                <div class="stat-progress-bar" id="progress-bar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tasks Container -->
+      <section class="tasks-container">
+        <div class="tasks-header">
+          <h2 class="tasks-title" id="tasks-title">All Tasks</h2>
+          <div class="tasks-actions">
+            <button class="btn btn-outline btn-clear-completed" id="clear-completed-btn">
+              Clear Completed
+            </button>
+          </div>
+        </div>
+
+        <div class="tasks-list" id="tasks-list">
+          <!-- Tasks will be rendered here -->
+        </div>
+
+        <div class="empty-state" id="empty-state">
+          <div class="empty-state-icon">📭</div>
+          <div class="empty-state-text">No tasks found</div>
+          <div class="empty-state-subtext">Try adjusting your filters or add a new task</div>
+          <button class="btn btn-primary" id="open-add-task-modal-from-empty">
+            Add First Task
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Add Task Modal -->
+  <div class="modal" id="add-task-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Add New Task</h2>
+        <button class="modal-close-btn" id="close-add-task-modal">&times;</button>
+      </div>
+      <form class="task-form" id="task-form">
+        <div class="form-group">
+          <label for="task-title">Task Title *</label>
+          <input type="text" id="task-title" placeholder="Enter task title" required>
+        </div>
+
+        <div class="form-group">
+          <label for="task-description">Description</label>
+          <textarea id="task-description" placeholder="Enter task description (optional)" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-due-date">Due Date</label>
+            <input type="date" id="task-due-date">
+          </div>
+          <div class="form-group">
+            <label for="task-priority">Priority</label>
+            <select id="task-priority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="task-category">Category</label>
+          <input type="text" id="task-category" placeholder="Work, Personal, Shopping, etc.">
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label>
+            <input type="checkbox" id="task-important">
+            Mark as Important
+          </label>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="close-add-task-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Task</button>
+        </div>
+      </form>
     </div>
   </div>
+
+  <!-- Edit Task Modal -->
+  <div class="modal" id="edit-task-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Edit Task</h2>
+        <button class="modal-close-btn" id="close-edit-task-modal">&times;</button>
+      </div>
+      <form class="task-form" id="edit-task-form">
+        <input type="hidden" id="edit-task-index">
+        <div class="form-group">
+          <label for="edit-task-title">Task Title *</label>
+          <input type="text" id="edit-task-title" placeholder="Enter task title" required>
+        </div>
+
+        <div class="form-group">
+          <label for="edit-task-description">Description</label>
+          <textarea id="edit-task-description" placeholder="Enter task description (optional)" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-task-due-date">Due Date</label>
+            <input type="date" id="edit-task-due-date">
+          </div>
+          <div class="form-group">
+            <label for="edit-task-priority">Priority</label>
+            <select id="edit-task-priority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="edit-task-category">Category</label>
+          <input type="text" id="edit-task-category" placeholder="Work, Personal, Shopping, etc.">
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label>
+            <input type="checkbox" id="edit-task-important">
+            Mark as Important
+          </label>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="close-edit-task-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
 
   <script src="script.js"></script>
 </body>
